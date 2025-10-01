@@ -1,0 +1,52 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@model IPagedList<WebApplication1.Models.TblProduct>
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/UserMasterLayout.cshtml";
+
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+@if (Model != null)
+{
+
+    foreach (var item in Model)
+    {
+        <div class="col-lg-3 col-md-4 col-sm-12">
+
+            <div class="card m-4 border-0 d-inline-flex w-75" style="border-radius: 24px; margin-left:20px;">
+                <img src="@Url.Content(item.ProImage)" class="card-img-top" height="230" />
+                <h4 class="text-center"> @Html.ActionLink(item.ProName, "ViewAd", new { id = item.ProId }, new { @class = "text-danger text-center fw-bold text-decoration-none" })</h4>
+                <h5 class="text-center text-success fw-bold"> €@item.ProPrice </h5>
+                <span class="text-muted text-center">@item.ProDes <span class="badge bg-danger w-25 text-center">@item.TblUser.UName</span></span> 
+            </div>
+        </div>
+    }
+
+}
+
+
+
+<div class="text-center mt-4">
+        <p>
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        </p>
+
+        @Html.PagedListPager(
+                Model,
+                page => Url.Action("ViewCategory", new { page }),
+                new PagedListRenderOptions
+    {
+        UlElementClasses = new[] { "pagination", "justify-content-center" },
+        LiElementClasses = new[] { "page-item" },
+        PageClasses = new[] { "page-link" },
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+        DisplayLinkToNextPage = PagedListDisplayMode.Always
+    }
+                )
+    </div>

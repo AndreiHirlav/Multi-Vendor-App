@@ -1,0 +1,52 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@model IPagedList<WebApplication1.Models.TblCategory>
+
+@{
+    ViewBag.Title = "View Category";
+    Layout = "~/Views/Shared/AdminMasterLayout.cshtml";
+}
+
+<p class="display-6 text-center fw-bold text-danger">Categories</p>
+
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm" style="border-radius: 24px;">
+                    <img src="@Url.Content(item.CatImage)" class="card-img-top" height="230" style="object-fit:cover;" />
+                    <div class="card-body text-center">
+                        <h4 class="text-danger fw-bold">@item.CatName</h4>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="text-center mt-4">
+        <p>
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        </p>
+
+        @Html.PagedListPager(
+                Model,
+                page => Url.Action("ViewCategory", new { page }),
+                new PagedListRenderOptions
+    {
+        UlElementClasses = new[] { "pagination", "justify-content-center" },
+        LiElementClasses = new[] { "page-item" },
+        PageClasses = new[] { "page-link" },
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+        DisplayLinkToNextPage = PagedListDisplayMode.Always
+    }
+                )
+    </div>
+}
+else
+{
+    <p class="text-center text-muted">No categories to display.</p>
+}

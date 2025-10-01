@@ -1,0 +1,77 @@
+﻿@model WebApplication1.Models.ViewAdModel
+@{
+    ViewBag.Title = "ViewAd";
+    Layout = "~/Views/Shared/UserMasterLayout.cshtml";
+}
+
+<div class="col-md-2"></div>
+<div class="col-lg-10 col-md-10 col-sm-12">
+    <div class="card-header"><h3 class="text-success fw-bold text-center">Product Description</h3></div>
+    <div class="card">
+        <div class="card-body">
+            <table class="table">
+                <tr>
+                    <td>
+                        <div class="m-4 border-2 d-inline-flex w-75" style="border-radius: 24px; margin-left:20px;">
+                            <img src="@Url.Content(@Model.ProImage)" class="card-img-top" height="230" />
+                        </div>
+                    </td>
+
+                    <td>
+
+                        <table class="table table-striped w-75">
+                            <tr>
+                                <td><i class="fa fa-user-cog text-danger"></i> Name: </td>
+                                <td class="text-muted"> @Model.ProName</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa fa-money-bill text-danger"></i> Price:</td>
+                                <td class="text-muted"><i class="fa fa-euro-sign"></i> @Model.ProPrice</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa fa-info-circle text-danger"></i> Information:</td>
+                                <td class="text-muted"> @Model.ProDes</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa fa-info-circle text-danger"></i> Category:</td>
+                                <td class="text-muted"> @Model.CatName</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold text-primary"><i class="fa fa-user text-danger"></i> Posted By: </td>
+                                <td class="text-info">@Model.UName </td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa fa-phone-flip text-danger"></i> Contact:</td>
+                                <td class="text-info"> @Model.UContact</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fa fa-envelope-open text-danger"></i> Email:</td>
+                                <td class="text-info"> @Model.UEmail</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="m-4 border-2 d-inline-flex w-25" style="border-radius: 24px; margin-left:20px;">
+                                        <img src="@Url.Content(@Model.UImage)" class="card-img-top" width="150" height="100" />
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="card-header bg-light">
+            <table class="table">
+                <tr>
+                    <td>
+                        @if (Convert.ToInt32(Context.Session.GetString("u_id")) == Convert.ToInt32(Model.ProFkUser))
+                        {
+                            @Html.ActionLink("Delete Ad", "DeleteAd", new { id = Model.ProId }, new { @class = "btn btn-danger" })
+                        }
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
